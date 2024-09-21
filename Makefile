@@ -7,9 +7,9 @@ all: 630a
 	$(compile) 630a.cpp -o $(build)/630a
 
 clear:
-	rm -rf ./bins/*
+	rm -rf ./bins/* *.a
 
 rebuild: clear all
 
 clang: 
-	clang-format -i *.cpp
+	clang-format -i *.cpp 
