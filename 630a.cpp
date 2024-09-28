@@ -7,6 +7,7 @@
 #include <iostream>
 #include <string>
 #include <cmath>
+#include <random>
 
 void matrix_sort(int** matrix, int n, int m);
 void matrix_print(int** matrix, int n, int m, int max_num);
@@ -15,7 +16,10 @@ void manualMatrix();
 int validator();
 int get_lenth(int num);
 
+int randomizer(int low, int high);
+
 int main(int argc, char* argv[]) {
+    setlocale(LC_ALL, "ru_RU.UTF-8");
     if ((argc == 2) && (std::string(argv[1]) == "rand"))
         randomMatrix();
     else
@@ -42,7 +46,6 @@ void manualMatrix() {
         matrix_sort(matrix, n, m);
         std::cout << "\nОтсортированная матрица:\n";
 
-        // Выводим матрицу:
         matrix_print(matrix, n, m, max_len);
         for (int i = 0; i < n; i++) {
             free(matrix[i]);
@@ -55,15 +58,15 @@ void manualMatrix() {
 void randomMatrix() {
     std::cout << "Матрица будет заполнена случайными значениями и выдан случайный размер\n";
     int m, n;
-    n = rand() % 20 + 1;
-    m = rand() % 20 + 1;
+    n = randomizer(1, 15);
+    m = randomizer(1, 15);
     std::cout << "Размеры матрицы: " << n << " на " << m << "\n"
               << "Исходная матрица:\n";
     int** matrix = (int**)malloc(n * sizeof(int*));
     for (int i = 0; i < n; i++) matrix[i] = (int*)malloc(m * sizeof(int));
     for (int i = 0; i < n; i++)
         for (int j = 0; j < m; j++)
-            matrix[i][j] = rand() % 101 - 50;  // заполняем матрицу случайными числами в даиапазоне [-50; +50]
+            matrix[i][j] = randomizer(-50, 50);
     matrix_print(matrix, n, m, 3);
     matrix_sort(matrix, n, m);
     std::cout << "\nОтсортированная матрица:\n";
@@ -114,7 +117,6 @@ int validator() { // проверка ввода
                     output = std::stoi(input);
                 }
             }
-            // if (minus) output *= -1;
         }
         catch (...) {
             err = true;
@@ -129,4 +131,12 @@ int get_lenth(int num) {
     if (num > 0) len = static_cast<int>(std::log10(num)) + 1;
     else if (num) len = static_cast<int>(std::log10(num * (-1))) + 2;
     return len;
+}
+
+// Рандомайзер для чисел:
+int randomizer(int low, int high) {
+    std::random_device num;
+    std::mt19937 gen(num());
+    std::uniform_int_distribution<> distrib(low, high);
+    return distrib(gen);
 }

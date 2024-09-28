@@ -6,11 +6,11 @@ all: 630a
 630a: 630a.cpp
 	$(compile) 630a.cpp -o $(build)/630a
 
-eva: 674.cpp
-	$(compile) 674.cpp -o $(build)/674
-
 clear:
 	rm -rf ./bins/* *.a
+
+run: 630a
+	$(build)/630a rand
 
 rebuild: clear all
 
