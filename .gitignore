@@ -2,3 +2,4 @@ bins
 *.pdf
 .vscode
 *.docx
+**/test*

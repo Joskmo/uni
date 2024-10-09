@@ -14,5 +14,5 @@ run: 630a
 
 rebuild: clear all
 
-clang: 
+clang:
 	clang-format -i *.cpp 
