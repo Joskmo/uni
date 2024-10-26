@@ -1,5 +1,8 @@
-bins
+bins/*
+!bins/folder_for_bins.txt
 *.pdf
 .vscode
 *.docx
 **/test*
+find ./bins -type f ! -name 'sample.txt' -exec rm -f {} +
+parser.cpp

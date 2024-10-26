@@ -3,11 +3,11 @@
 Упорядочить строки матрицы по неубыванию значений первых элементов строк.
 */
 
+#include <cmath>
 #include <cstdlib>
 #include <iostream>
-#include <string>
-#include <cmath>
 #include <random>
+#include <string>
 
 void matrix_sort(int** matrix, int n, int m);
 void matrix_print(int** matrix, int n, int m, int max_num);
@@ -65,8 +65,7 @@ void randomMatrix() {
     int** matrix = (int**)malloc(n * sizeof(int*));
     for (int i = 0; i < n; i++) matrix[i] = (int*)malloc(m * sizeof(int));
     for (int i = 0; i < n; i++)
-        for (int j = 0; j < m; j++)
-            matrix[i][j] = randomizer(-50, 50);
+        for (int j = 0; j < m; j++) matrix[i][j] = randomizer(-50, 50);
     matrix_print(matrix, n, m, 3);
     matrix_sort(matrix, n, m);
     std::cout << "\nОтсортированная матрица:\n";
@@ -98,7 +97,7 @@ void matrix_print(int** matrix, int n, int m, int max_num_lenth) {
     }
 }
 
-int validator() { // проверка ввода
+int validator() {  // проверка ввода
     bool err = true;
     int output = 0;
     while (err) {
@@ -117,8 +116,7 @@ int validator() { // проверка ввода
                     output = std::stoi(input);
                 }
             }
-        }
-        catch (...) {
+        } catch (...) {
             err = true;
             std::cout << "Проверьте введённые данные\n";
         }
@@ -128,8 +126,10 @@ int validator() { // проверка ввода
 
 int get_lenth(int num) {
     int len = 1;
-    if (num > 0) len = static_cast<int>(std::log10(num)) + 1;
-    else if (num) len = static_cast<int>(std::log10(num * (-1))) + 2;
+    if (num > 0)
+        len = static_cast<int>(std::log10(num)) + 1;
+    else if (num)
+        len = static_cast<int>(std::log10(num * (-1))) + 2;
     return len;
 }
 
