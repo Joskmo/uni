@@ -58,10 +58,16 @@ struct list {
         bool not_first_flag = false;
         for (auto num : pol) {
             if (not_first_flag && num.first >= 0) {
-                cout << "+";
-            } else
+                cout << "+ " << num.first;
+            } else {
                 not_first_flag = true;
-            cout << num.first << "x^" << num.second << " ";
+                if (num.first < 0)
+                    cout << "- " << abs(num.first);
+                else
+                    cout << num.first;
+            }
+            if (num.second)
+                cout << "x^" << num.second << " ";
         }
         cout << endl;
     }
@@ -124,10 +130,16 @@ struct list {
             return;
         }
         while (p) {
-            cout << p->coefficient << "x^" << p->degree;
+            if (p->degree)
+                cout << abs(p->coefficient) << "x^" << p->degree;
+            else cout << abs(p->coefficient);
             p = p->next;
             if (p) {
-                cout << " + ";
+                cout << " ";
+                if (p->coefficient >= 0)
+                    cout << "+ ";
+                else
+                    cout << "- ";
             }
         }
         cout << endl;
@@ -175,6 +187,7 @@ struct list {
         }
     }
 
+    // Создание списка вручную
     void manual_create() {
         cout << endl;
         bool confirmed = false;
@@ -227,7 +240,7 @@ struct list {
         char choose;
         bool confirmed = false;
 
-        if (!is_empty()) {  // Проверяем существование существующего списка
+        if (!is_empty()) {
             char confirm;
             cout << "Многочлен уже существует. Жалеаете его пересоздать? (y/n): ";
             cin >> confirm;
@@ -301,7 +314,10 @@ void ind_choose(list* head_ptr) {
                 break;
 
             case '3':
-                head_ptr->counter();
+                if (!head_ptr->is_empty())
+                    head_ptr->counter();
+                else
+                    cout << "\nСписок пуст. Для вычисления значения многочлена создайте его.\n";
                 break;
 
             case '0':
@@ -336,18 +352,24 @@ void comm_choose(list* head_ptr) {
         cin >> choose;
         switch (choose) {
             case '1':
-                cout << "\nВыбрана функция вставки узла в начало списка\n";
+                cout << "\nВыбрана функция вставки узла в начало списка\n"; // добавить проверку на то, чтобы показетлеь степени был больше, чем до этого
                 coeff = 0;
                 degree = -1;
                 while (!coeff) {
                     cout << "Введите коэффициент: ";
                     cin >> coeff;
                     cout << endl;
+                    cin.clear();
                 }
                 while (degree < 0) {
                     cout << "Введите показатель степени: ";
                     cin >> degree;
                     cout << endl;
+                    cin.clear();
+                    if (degree <= head_ptr->first->degree) {
+                        cout << "Показатель степени должен превышать текущий наибольший\n";
+                        degree = -1;
+                    }
                 }
                 head_ptr->insert(coeff, degree);
                 cout << "Узел успешно вставлен.\n";
