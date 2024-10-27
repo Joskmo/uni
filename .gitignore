@@ -2,8 +2,8 @@ bins/*
 !bins/folder_for_bins.txt
 *.pdf
 .vscode
-*.docx
-*.odt
+*.docx*
+*.odt*
 **/test*
 find ./bins -type f ! -name 'sample.txt' -exec rm -f {} +
 parser.cpp
